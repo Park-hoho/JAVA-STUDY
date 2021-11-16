@@ -80,14 +80,17 @@ public class VariableExample {
 		System.out.println("varD" + varD);
 
 		// boolean 타입
-		boolean stop = false;
+		boolean stop = false; 
 		if (stop) {
 			System.out.println("중지합니다.");
 		} else {
 			System.out.println("시작합니다.");
 		}
 		
-		
+		int x3 = 1;
+		int x4 = 2;
+		double result = x3 / x4;
+		System.out.println(result);
 	}
 
 }

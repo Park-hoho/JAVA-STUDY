@@ -75,9 +75,9 @@ public class VariableExample {
 				int v3 = v1 + v2;
 				System.out.println(v1 + "+" + v2 + "=" + v3);
 			}
-			System.out.println(v1 + "+" + v2 + "=" + v3);
+//			System.out.println(v1 + "+" + v2 + "=" + v3);
 		}
-		System.out.println(v1 +"+"+v2+"="+v3);
+//		System.out.println(v1 +"+"+v2+"="+v3);
 		
 	}
 
