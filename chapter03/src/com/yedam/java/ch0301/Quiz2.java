@@ -45,9 +45,8 @@ public class Quiz2 {
 		 */
 		int a = -1;
 		int b = 0;
-		String result2;
-		
-		result2 = ((a < 0) || (b < 0)) ? "One of a or b is negative number" : "both a and b are zero or more";
+
+		String result2 = ((a < 0) || (b < 0)) ? "One of a or b is negative number" : "both a and b are zero or more";
 		System.out.println(result2);
 	}
 
