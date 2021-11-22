@@ -11,7 +11,7 @@ public class test {
 		int diceNum = 0;
 		int dice;
 		int count = 0;
-		int[] diceArr = new int[10];
+		int[] diceArr = null;
 		
 		while(run) {
 			System.out.println("===1.주사위 크기 2.주사위 굴리기 3.결과 보기 4.가장 많이 나온 수 5.종료===");
@@ -32,6 +32,7 @@ public class test {
 					case 9:
 					case 10:
 						run2 = false;
+						 diceArr = new int[diceNum];
 						break;
 					default:
 						System.out.println("5 ~ 10 사이의 숫자를 입력해주세요.");
