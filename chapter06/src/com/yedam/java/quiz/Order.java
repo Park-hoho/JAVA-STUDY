@@ -2,7 +2,7 @@ package com.yedam.java.quiz;
 
 public class Order {
 	//필드
-	long no;
+	String no;
 	String id;
 	String date;
 	String name;
@@ -14,7 +14,7 @@ public class Order {
 		
 	}
 	Order(
-			long no, 
+			String no, 
 			String id, 
 			String date, 
 			String name, 
@@ -28,7 +28,7 @@ public class Order {
 		this.address = address;
 	}
 	
-	//메소드
+	//메서드
 	void printReceipt() {
 		System.out.println("주문 번호 : " + this.no);
 		System.out.println("주문자 아이디 : " + this.id);

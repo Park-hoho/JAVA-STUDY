@@ -2,22 +2,44 @@ package com.yedam.java.quiz;
 
 public class Person {
 	//필드
-	int age = 40;
-	String name = "james";
-	boolean marriage = true;
-	int child = 3;
+	int age;
+	String name;
+	String gender;
+	boolean isMarried;
+	int children;
 	//생성자
-	Person(int age, String name, boolean marriage, int child) {
-		this.age = age;
+	Person(String name, int age, String gender) {
 		this.name = name;
-		this.marriage = marriage;
-		this.child = child;
+		this.age = age;
+		this.gender = gender;
 	}
-	//메소드
-	void printInfo() {
-		System.out.println("나이 : " + this.age);
-		System.out.println("이름 : " + this.name);
-		System.out.println("결혼 여부 : " + this.marriage);
-		System.out.println("자녀 수 : " + this.child);
+	//메서드
+	public void isMarried(boolean isMarried) {
+		this.isMarried = isMarried;
 	}
+	
+	public void setChildren(int children) {
+		this.children = children;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public int getAge() {
+		return age;
+	}
+	
+	public String getGender() {
+		return gender;
+	}
+	
+	public boolean isMarried() {
+		return isMarried;
+	}
+	
+	public int getChildren() {
+		return children;
+	}
+	
 }
