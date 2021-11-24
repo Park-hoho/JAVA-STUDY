@@ -6,6 +6,7 @@ public class KongCafe {
 	static int americanoPrice = 2000;
 	static int lattePrice = 4500;
 	
+	String cafeName = "콩다방";
 	String branchName;
 	int money; //수익
 	int count; //판매한 커피 수
@@ -39,7 +40,7 @@ public class KongCafe {
 	}
 	
 	public void showInfo() {
-		System.out.printf("콩다방 %s의 손님은 %d명이고 수입은 %d원입니다.\n", branchName, todayCustomer, money);
+		System.out.printf("%s %s의 손님은 %d명이고 수입은 %d원입니다.\n", cafeName, branchName, todayCustomer, money);
 	}
 	
 }

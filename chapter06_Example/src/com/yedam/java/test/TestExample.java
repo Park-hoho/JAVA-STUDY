@@ -25,11 +25,11 @@ public class TestExample {
 		//문제2)
 		System.out.println("=========== 문제2번");
 		
-		Card parkCard = new Card();
-		Card leeCard = new Card();
+		Card kimCard = new Card("kbCard");
+		Card leeCard = new Card("kdbCard");
 		
-		System.out.println("kbCard : " + parkCard.getCardId());
-		System.out.println("kdbCard : " + leeCard.getCardId());
+		System.out.println(kimCard.getCardCompanyName() + " : " + kimCard.getCardId());
+		System.out.println(leeCard.getCardCompanyName() + " : " + leeCard.getCardId());
 		
 		//문제3)
 		System.out.println("=========== 문제3번");
@@ -40,6 +40,7 @@ public class TestExample {
 		
 		System.out.println("첫번째 카드 : " + firstCard.getCardId());
 		System.out.println("두번째 카드 : " + secondCard.getCardId());
+		cardCompany.showInfo();
 	}
 
 }

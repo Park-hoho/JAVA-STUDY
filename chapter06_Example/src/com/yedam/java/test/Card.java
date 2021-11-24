@@ -2,12 +2,14 @@ package com.yedam.java.test;
 
 public class Card {
 	private static int cardNum = 1000;
-	private int cardId;
+	private String cardId;
+	private String cardCompanyName;
 	
-	Card() {
+	Card(String cardCompanyName) {
 		System.out.println("카드가 생성되었습니다.");
 		Card.cardNum++;
-		this.cardId = cardNum;
+		this.cardCompanyName = cardCompanyName;
+		this.cardId = "KR-" + cardNum;
 	}
 	
 	public static int getCardNum() {
@@ -18,11 +20,16 @@ public class Card {
 		Card.cardNum = cardNum;
 	}
 
-	public int getCardId() {
+	public String getCardId() {
 		return cardId;
 	}
 
 	public void setCardId(int cardId) {
-		this.cardId = cardId;
+		this.cardId = "KR-" + cardId;
 	}
+	
+	public String getCardCompanyName() {
+		return cardCompanyName;
+	}
+
 }
