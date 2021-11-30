@@ -23,9 +23,20 @@ public class Library {
 		}
 	}
 	
-	//2.지정된 책 정보 확인
-	public void searchBook() {
-		
+	//2.지정된 책 정보 확인 - 책 이름
+	public void selectBookInfo(String name) {
+		boolean isSearch = false;
+		for(int i = 0; i < this.bookCount; i++) {
+			String bookName = bookList[i].getBookName();
+			if(bookName.equals(name)) {
+				System.out.println(bookList[i]);
+				isSearch = true;
+				break;
+			}
+		}
+		if (!isSearch) {
+			System.out.println("검색결과를 찾지 못했습니다.");
+		}
 	}
 	
 	//4.책 대여
