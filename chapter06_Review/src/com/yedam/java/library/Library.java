@@ -15,6 +15,16 @@ public class Library {
 	//method
 	
 	//3.책에 대한 입고처리
+	public void addBook(String name, String writer) {
+		if(this.bookCount == MAX_SIZE) {
+			System.out.println("빈 공간이 없습니다.");
+			return;
+		}
+		Book book = new Book(name, writer);
+		bookList[bookCount] = book;
+		bookCount++;
+		System.out.println("정상 입고되었습니다.");
+	}
 	
 	//1.현재 보유 중인 책 정보 확인
 	public void printBookList() {
@@ -40,9 +50,53 @@ public class Library {
 	}
 	
 	//4.책 대여
+	public void rentalBook(String name) {
+		for(int i = 0; i < this.bookCount; i++) {
+			Book book = bookList[i];
+			String bookName = book.getBookName();
+			if(bookName.equals(name)) {
+				if(!book.isRental()) {
+					book.setRental(true);
+					book.rentalCountUp();
+					System.out.printf("책 %s이 대여되었습니다.\n", name);
+				} else {
+					System.out.printf("책 %s이 대여중입니다.\n", name);
+				}
+			}
+		}
+		
+	}
 	
 	//5.책 반납
+	public void returnBook(String name) {
+		for(int i = 0; i < this.bookCount; i++) {
+			Book book = bookList[i];
+			String bookName = book.getBookName();
+			if(bookName.equals(name)) {
+				book.setRental(false);
+				System.out.printf("책 %s이 반납되었습니다.\n", name);
+			}
+		}
+	}
 	
 	//6.대여횟수를 기준으로 인기순위 확인
-
+	public void showRank() {
+		Book[] rank = new Book[bookCount];
+		System.arraycopy(bookList, 0, rank, 0, bookCount);
+		
+		for(int i = 0; i < rank.length-1; i++) {
+			for(int j = i + 1; j < rank.length; j++) {
+				if(rank[i].getRentalCount() < rank[j].getRentalCount()) {
+					Book temp = rank[i];
+					rank[i] = rank[j];
+					rank[j] = temp;
+				}
+			}
+		}
+		
+		for(Book book : rank) {
+			System.out.println(book);
+		}
+		
+	}
 }

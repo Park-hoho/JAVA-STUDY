@@ -16,7 +16,7 @@ public class DaoExample {
 		
 		dbWork(new OracleDao());
 //		dbWork(new MySqlDao());
-		
+		OracleDao oc = new OracleDao();
 	}
 
 }
