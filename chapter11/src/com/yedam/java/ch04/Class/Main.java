@@ -1,4 +1,4 @@
-package com.yedma.java.ch04.Class;
+package com.yedam.java.ch04.Class;
 
 import com.yedam.java.ch01.object.Car;
 
