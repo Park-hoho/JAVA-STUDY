@@ -28,7 +28,7 @@ public class Main {
 			int ssnMonth = Integer.parseInt(persons[i].substring(2, 4));
 			int ssnDay = Integer.parseInt(persons[i].substring(4, 6));
 			age = checkAge(ssnYear, ssnMonth, ssnDay, todayYear, todayMonth, todayDay);
-		
+			
 			if(ssnSex == 1) {
 				boy++;
 			} else if (ssnSex == 2) {

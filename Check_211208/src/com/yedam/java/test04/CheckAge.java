@@ -4,20 +4,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CheckAge {
+	SimpleDateFormat md = new SimpleDateFormat("yyyyMMdd");
+	String today = md.format(new Date());
 	int age;
-	int todayYear;
-	int todayMonth;
-	int todayDay;
+	private static int todayYear = Integer.parseInt(today.substring(0, 4));
+	private static int todayMonth = Integer.parseInt(today.substring(4, 6));
+	private static todayDay = Integer.parseInt(today.substring(6, 8));
 	int ssnYear;
 	int ssnMonth;
 	int ssnDay;
-	SimpleDateFormat md = new SimpleDateFormat("yyyyMMdd");
-	String today = md.format(new Date());
 	
 	CheckAge(int ssnYear, int ssnMonth, int ssnDay) {
-		todayYear = Integer.parseInt(today.substring(0, 4));
-		todayMonth = Integer.parseInt(today.substring(4, 6));
-		todayDay = Integer.parseInt(today.substring(6, 8));
 		this.ssnYear = ssnYear;
 		this.ssnMonth = ssnMonth;
 		this.ssnDay = ssnDay;
