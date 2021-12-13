@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) {
 //		문제4) 아래와 같이 데이터가 주어졌을 경우 남녀 수와 만 20세 이하인 인원을 구하세요.
-		String[] persons = {"010302-2","991203-1","969513-2","881125-1","050105-2"};
+		String[] persons = {"010302-2","991203-1","960513-2","881125-1","050105-2"};
 		
 		int boy = 0;
 		int girl = 0;
@@ -43,6 +43,11 @@ public class Main {
 		
 		System.out.println("남 " + boy + ", 여 " + girl);
 		System.out.println("만 20세 이하 " + underTwenty);
+		float x = 2.22f;
+		float y = 2.244f;
+		x++;
+		x += y;
+		System.out.println(x);
 //		- 실행결과
 //		남 2, 여 3
 //		만 20세 이하 2

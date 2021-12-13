@@ -11,15 +11,17 @@ public class MonthSchedule {
 	
 	public void input(int d, String work) {
 		//할일넣기
-		todo[d-1] = new Day();
-		todo[d-1].set(work);
+		d--;
+		todo[d] = new Day();
+		todo[d].set(work);
 	}
 	
 	public void view(int d) {
 		//할일보기
-		if(todo[d-1] == null) todo[d-1] = new Day();
+		d--;
+		if(todo[d] == null) todo[d] = new Day();
 		System.out.printf("%d일의 할 일은 ", d);
-		todo[d-1].show();
+		todo[d].show();
 	}
 	
 	public void finish() {
