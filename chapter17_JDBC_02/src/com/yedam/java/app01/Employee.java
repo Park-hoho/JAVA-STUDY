@@ -1,6 +1,6 @@
 package com.yedam.java.app01;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Employee {
 	//field

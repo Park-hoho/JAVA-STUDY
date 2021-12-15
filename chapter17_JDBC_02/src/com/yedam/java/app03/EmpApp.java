@@ -1,23 +1,14 @@
-package com.yedam.java.app01;
+package com.yedam.java.app03;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
 
 public class EmpApp {
 	
 	public static void main(String[] args) {
-//		EmpDAO dao = EmpDAO.getInstance();
-//		List<Employee> datas = dao.selectAll();
-//		for(Employee data : datas) {
-//			System.out.println(data);
-//		}
-//		dao.selectOne(103);
-		
 		Scanner sc = new Scanner(System.in);
 		boolean run = true;
 		
-		//DAO
 		EmpDAO dao = EmpDAO.getInstance();
 		Employee emp = null;
 		int employeeId = 0;
@@ -28,32 +19,21 @@ public class EmpApp {
 			System.out.println("1.등록  2.수정  3.삭제  4.사원조회  5.전체조회  9.종료");
 			System.out.println("============================================");
 			System.out.print("선택>>");
-			int menuNo = sc.nextInt();
+			int menu = sc.nextInt();
 			
-			switch(menuNo) {
+			switch(menu) {
 			case 1:
 				emp = new Employee();
 				System.out.print("사번>>");
 				emp.setEmployeeId(sc.nextInt());
 				System.out.print("이름>>");
-				emp.setFirstName(sc.next());
-				System.out.print("성>>");
 				emp.setLastName(sc.next());
-				System.out.print("이메일>>");
-				emp.setEmail(sc.next());
-				System.out.print("전화번호>>");
-				emp.setPhoneNumber(sc.next());
-				System.out.print("입사일>>");
-				//입력형식 : YYYY-MM-DD
-				emp.setHireDate(Date.valueOf(sc.next()));
 				System.out.print("직급>>");
 				emp.setJobId(sc.next());
 				System.out.print("연봉>>");
 				emp.setSalary(sc.nextDouble());
 				System.out.print("상여>>");
 				emp.setCommissionPct(sc.nextDouble());
-				System.out.print("상사>>");
-				emp.setManagerId(sc.nextInt());
 				System.out.print("부서>>");
 				emp.setDepartmentId(sc.nextInt());
 				
@@ -87,7 +67,7 @@ public class EmpApp {
 				break;
 			case 9:
 				run = false;
-				System.out.println("프로그램을 종료합니다.");
+				System.out.println("프로그램 종료");
 				sc.close();
 				break;
 			}
