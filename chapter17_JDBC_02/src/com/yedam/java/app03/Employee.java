@@ -1,12 +1,9 @@
 package com.yedam.java.app03;
 
 public class Employee {
-	private int employeeId;
-	private String lastName;
-	private String jobId;
-	private double salary;
-	private double commissionPct;
-	private int departmentId;
+	private int employeeId, departmentId;
+	private String lastName, jobId;
+	private double salary, commissionPct;
 	
 	public int getEmployeeId() {
 		return employeeId;
