@@ -14,6 +14,8 @@ public class Main {
 		} else if (selected == 2) {
 			new ManagerFrame();
 		}
+		
+		sc.close();
 	}
 
 }
