@@ -1,4 +1,4 @@
-package com.yedam.app.common;
+package com.yedam.java.app.common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
