@@ -39,12 +39,12 @@ public class ManagerController {
 	}
 	
 	void insertStore() {
-		Store store = inputStoreAll();
-		StoreDAOImpl.getInstance().insert(store);
+//		Store store = inputStoreAll();
+//		StoreDAOImpl.getInstance().insert(store);
 	}
 	
 	void updateStore() {
-		Store store = inputStoreAll();
-		StoreDAOImpl.getInstance().insert(store);
+//		Store store = inputStoreAll();
+//		StoreDAOImpl.getInstance().insert(store);
 	}
 }
