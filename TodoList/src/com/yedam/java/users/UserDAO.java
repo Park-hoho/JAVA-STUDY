@@ -18,7 +18,7 @@ public interface UserDAO {
 	void delete(int userNo);
 	
 	//회원가입 (User)
-	void insert(User user);
+	boolean insert(User user);
 		
 	//로그인 (User)
 	User checklogin(String id, String password);

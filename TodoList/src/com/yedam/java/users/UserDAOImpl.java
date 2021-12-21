@@ -133,7 +133,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 	}
 	
 	@Override
-	public void insert(User user) {
+	public boolean insert(User user) {
 		// 회원가입
 		try {
 			connect();
@@ -144,14 +144,21 @@ public class UserDAOImpl extends DAO implements UserDAO {
 			pstmt.setString(2, user.getUserId());
 			pstmt.setString(3, user.getUserPwd());
 			int result = pstmt.executeUpdate();
-			System.out.println(result == 1 ? "회원가입 완료하셨습니다" : "회원가입에 실패하셨습니다.");
+			if (result == 1) {
+				System.out.println("회원가입 완료하셨습니다");
+				return true;
+			} else {
+				System.out.println("회원가입에 실패하셨습니다.");
+				return false;
+			}
 		} catch (SQLIntegrityConstraintViolationException e) {
-			System.out.println("동일한 이메일이 존재합니다. 다시 시도하세요!");
+			System.out.println("동일한 아이디가  존재합니다. 다시 시도하세요!");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			disconnect();
 		}
+		return false;
 	}
 	
 	@Override
@@ -165,14 +172,20 @@ public class UserDAOImpl extends DAO implements UserDAO {
 			pstmt.setString(1, id);
 			pstmt.setString(2, password);
 			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				user.setUserNo(rs.getInt("user_no"));
-				user.setUserName(rs.getString("user_name"));
-				user.setUserId(rs.getString("user_id"));
-				user.setUserPwd(rs.getString("user_pwd"));
-				user.setJoinDate(rs.getDate("join_date"));
-				user.setLastAccessDate(rs.getDate("last_access_date"));
-				user.setWithdrawalStatus(rs.getString("withdrawal_status"));
+			if (rs.isBeforeFirst()) {
+				while(rs.next()) {
+					user.setUserNo(rs.getInt("user_no"));
+					user.setUserName(rs.getString("user_name"));
+					user.setUserId(rs.getString("user_id"));
+					user.setUserPwd(rs.getString("user_pwd"));
+					user.setJoinDate(rs.getDate("join_date"));
+					user.setLastAccessDate(rs.getDate("last_access_date"));
+					user.setWithdrawalStatus(rs.getString("withdrawal_status"));
+				}
+				String update = "UPDATE users SET last_access_date = sysdate WHERE user_no = ?";
+				pstmt = conn.prepareStatement(update);
+				pstmt.setInt(1, user.getUserNo());
+				pstmt.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

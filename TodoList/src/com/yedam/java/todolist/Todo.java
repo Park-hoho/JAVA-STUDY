@@ -2,7 +2,7 @@ package com.yedam.java.todolist;
 
 import java.sql.Date;
 
-public class Todo {
+public class Todo implements Comparable<Todo> {
 	private int todoId;
 	private int userNo;
 	private String todo;
@@ -73,5 +73,15 @@ public class Todo {
 		return "Todo [todoId=" + todoId + ", userNo=" + userNo + ", todo=" + todo + ", todoDeadline=" + todoDeadline
 				+ ", todoImportance=" + todoImportance + ", todoCheck=" + todoCheck + ", regDate=" + regDate
 				+ ", updateCount=" + updateCount + ", updateDate=" + updateDate + "]";
+	}
+	
+	@Override
+	public int compareTo(Todo todo) {
+		if (this.todoDeadline < todo.getScore()) {
+            return -1;
+        } else if (this.todoDeadline > todo.get()) {
+            return 1;
+        }
+        return 0;
 	}
 }

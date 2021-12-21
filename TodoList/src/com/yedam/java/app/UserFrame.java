@@ -32,15 +32,16 @@ public class UserFrame {
 	
 	private void userSignUp() {
 		User user = inputSignUp();
-		UserDAOImpl.getInstance().insert(user);		
-		userLogin();
+		if (UserDAOImpl.getInstance().insert(user)) {
+			userLogin();			
+		}
 	}
 
 	private void userLogin() {
 		User user = inputLogin();
-		if (user != null) {
+		if (user != null && !user.getWithdrawalStatus().equals("Y")) {
 			USER_INFO = user;
-			new UserController(USER_INFO);
+			new UserController();
 		}
 	}
 
