@@ -77,9 +77,9 @@ public class Todo implements Comparable<Todo> {
 	
 	@Override
 	public int compareTo(Todo todo) {
-		if (this.todoDeadline < todo.getScore()) {
+		if (this.todoDeadline.before(todo.getTodoDeadline())) {
             return -1;
-        } else if (this.todoDeadline > todo.get()) {
+        } else if (!this.todoDeadline.before(todo.getTodoDeadline())) {
             return 1;
         }
         return 0;

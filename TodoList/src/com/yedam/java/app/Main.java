@@ -15,7 +15,7 @@ public class Main {
 		if (selected == 1) {
 			new UserFrame();
 		} else if (selected == 2) {
-			//new AdminFrame();
+			new AdminFrame();
 		}
 		
 		sc.close();
