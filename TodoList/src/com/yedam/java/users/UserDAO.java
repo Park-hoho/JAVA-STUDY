@@ -8,7 +8,8 @@ public interface UserDAO {
 	List<User> selectAll();
 	
 	//단건조회
-	User selectOne(int userNo);
+	User selectOneNo(int userNo);
+	User selectOneId(String userId);
 	
 	//수정 (User, Admin)
 	void updateName(User user, String name);
@@ -22,4 +23,14 @@ public interface UserDAO {
 		
 	//로그인 (User)
 	User checklogin(String id, String password);
+	
+	//유저수 조회
+	int countAll();
+	
+	//탈퇴 신청
+	void applicationWithdrawal(User user, String reason);
+	
+	//탈퇴 취소 신청
+	void cancelWithdrawal(User user);
+	
 }

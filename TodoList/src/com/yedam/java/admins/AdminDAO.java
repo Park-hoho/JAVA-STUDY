@@ -14,6 +14,8 @@ public interface AdminDAO {
 	
 	//수정
 	void updateName(Admin admin, String name);
+	void updateId(Admin admin, String id);
+	void updatePwd(Admin admin, String password);
 	
 	//삭제
 	void delete(int adminNo);

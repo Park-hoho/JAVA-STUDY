@@ -8,7 +8,13 @@ import com.yedam.java.common.DAO;
 import com.yedam.java.users.User;
 
 public class WithdrawalDAOImpl extends DAO implements WithdrawalDAO {
-
+	//싱글톤
+	private static WithdrawalDAO instance = new WithdrawalDAOImpl();
+	private WithdrawalDAOImpl() {}
+	public static WithdrawalDAO getInstance() {
+		return instance;
+	}
+	
 	@Override
 	public List<Withdrawal> selectAll() {
 		List<Withdrawal> list = new ArrayList<>();
@@ -62,15 +68,15 @@ public class WithdrawalDAOImpl extends DAO implements WithdrawalDAO {
 	}
 
 	@Override
-	public void insert(User user, Withdrawal wdl) {
+	public void insert(User user, String reason) {
 		// TODO 탈퇴신청 추가
 		try {
 			connect();
-			String insert = "INSERT INTO withdrawal_list VALUES (WIDL_ID_SEQ.nextval,?,?,?,?,?)";
+			String insert = "INSERT INTO withdrawal_list "
+					+ "VALUES (WIDL_ID_SEQ.nextval,?,'Y',sysdate,null,?,null)";
 			pstmt = conn.prepareStatement(insert);
-			
 			pstmt.setInt(1, user.getUserNo());
-			
+			pstmt.setString(2, reason);
 			int result = pstmt.executeUpdate();
 			System.out.println(result + "건 입력완료");
 		} catch (SQLException e) {
@@ -81,13 +87,14 @@ public class WithdrawalDAOImpl extends DAO implements WithdrawalDAO {
 	}
 
 	@Override
-	public void update(Withdrawal wdl) {
+	public void update(User user, Withdrawal wdl) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void delete(int withdrawalId) {
+		// 탈퇴 신청서 삭제
 		try {
 			connect();
 			String delete = "DELETE FROM withdrawal_list WHERE withdrawal_id = ?";

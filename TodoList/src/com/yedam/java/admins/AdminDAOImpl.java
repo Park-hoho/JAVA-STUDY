@@ -1,14 +1,11 @@
 package com.yedam.java.admins;
 
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.yedam.java.common.DAO;
-import com.yedam.java.todolist.Todo;
-import com.yedam.java.todolist.TodoListDAO;
-import com.yedam.java.todolist.TodoListDAOImpl;
-import com.yedam.java.users.User;
 
 public class AdminDAOImpl extends DAO implements AdminDAO {
 	//싱글톤
@@ -68,13 +65,63 @@ public class AdminDAOImpl extends DAO implements AdminDAO {
 	public void insert(Admin admin) {
 		try {
 			connect();
-			String insert = "INSERT INTO emp13 VALUES (ADMIN_NO_SEQ.nextval,?,?,?)";
+			String insert = "INSERT INTO admins VALUES (ADMIN_NO_SEQ.nextval,?,?,?)";
 			pstmt = conn.prepareStatement(insert);
 			pstmt.setString(1, admin.getAdminName());
 			pstmt.setString(2, admin.getAdminId());
 			pstmt.setString(3, admin.getAdminPwd());
 			int result = pstmt.executeUpdate();
-			System.out.println(result + "건 입력완료");
+			if (result == 1) {
+				System.out.println("회원가입 완료하셨습니다");
+			} else {
+				System.out.println("회원가입에 실패하셨습니다.");
+			}
+		} catch (SQLIntegrityConstraintViolationException e) {
+			System.out.println("동일한 아이디가  존재합니다. 다시 시도하세요!");
+		}  catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+	
+	@Override
+	public void updateName(Admin admin, String name) {
+		// 이름 수정
+		try {
+			connect();
+			String update = "UPDATE admins SET admin_name = ? WHERE admin_no = ?";
+			pstmt = conn.prepareStatement(update);
+			pstmt.setString(1, name);
+			pstmt.setInt(2, admin.getAdminNo());
+			int result = pstmt.executeUpdate();
+			if (result == 1) {
+				System.out.println(name + "으로 변경 완료되었습니다.");
+			} else {
+				System.out.println("이름 변경 실패");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+	
+	@Override
+	public void updateId(Admin admin, String id) {
+		// 아이디 수정
+		try {
+			connect();
+			String update = "UPDATE admins SET admin_id = ? WHERE admin_no = ?";
+			pstmt = conn.prepareStatement(update);
+			pstmt.setString(1, id);
+			pstmt.setInt(2, admin.getAdminNo());
+			int result = pstmt.executeUpdate();
+			if (result == 1) {
+				System.out.println(id + "으로 변경 완료되었습니다.");
+			} else {
+				System.out.println("아이디 변경 실패");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -83,9 +130,25 @@ public class AdminDAOImpl extends DAO implements AdminDAO {
 	}
 
 	@Override
-	public void updateName(Admin admin, String name) {
-		// TODO Auto-generated method stub
-
+	public void updatePwd(Admin admin, String password) {
+		// 비밀번호 변경
+		try {
+			connect();
+			String update = "UPDATE admins SET admin_pwd = ? WHERE admin_no = ?";
+			pstmt = conn.prepareStatement(update);
+			pstmt.setString(1, password);
+			pstmt.setInt(2, admin.getAdminNo());
+			int result = pstmt.executeUpdate();
+			if (result == 1) {
+				System.out.println("비밀번호 변경 완료되었습니다.");
+			} else {
+				System.out.println("비밀번호 변경 실패");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
 	}
 
 	@Override

@@ -13,10 +13,10 @@ public interface WithdrawalDAO {
 	Withdrawal selectOne(int withdrawalId);
 	
 	//입력
-	void insert(User user, Withdrawal wdl);
+	void insert(User user, String reason);
 	
 	//수정
-	void update(Withdrawal wdl);
+	void update(User user, Withdrawal wdl);
 	
 	//삭제
 	void delete(int withdrawalId);

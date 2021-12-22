@@ -39,7 +39,7 @@ public class UserFrame {
 
 	private void userLogin() {
 		User user = inputLogin();
-		if (user != null && !user.getWithdrawalStatus().equals("Y")) {
+		if (user != null) {
 			USER_INFO = user;
 			new UserController();
 		}
@@ -51,11 +51,23 @@ public class UserFrame {
 		System.out.print("비밀번호>>");
 		String password = sc.next();
 		User user = UserDAOImpl.getInstance().checklogin(id, password);
-		if (user.getUserNo() == 0 || user.getUserId() == null) {
-			System.out.println("아이디 또는 비밀번호가 잘 못되었습니다.");
+		if (user == null) {
+			System.out.println("유저정보가 없습니다.");
+			return null;
+		} else if (user.getWithdrawalStatus().equals("Y")) {
+			System.out.println("탈퇴 처리된 유저입니다.");
+			System.out.print("탈퇴 취소하시겠습니까?(Y/N)>>"); 
+			String selected = sc.next();
+			if (selected.equals("Y")) {
+				
+				//탈퇴 취소 신청
+				UserDAOImpl.getInstance().cancelWithdrawal(user);
+				
+			} else if (selected.equals("N")) {
+				
+			} else { System.out.println("잘못된 입력입니다."); }
 			return null;
 		} else {
-			System.out.println("로그인 성공!");
 			return user;
 		}
 	}

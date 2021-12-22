@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.yedam.java.common.DAO;
+import com.yedam.java.withdrawallist.WithdrawalDAOImpl;
 
 public class UserDAOImpl extends DAO implements UserDAO {
 	//싱글톤
@@ -43,7 +44,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 	}
 
 	@Override
-	public User selectOne(int userNo) {
+	public User selectOneNo(int userNo) {
 		User user = new User();
 		try {
 			connect();
@@ -164,7 +165,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 	@Override
 	public User checklogin(String id, String password) {
 		// 로그인
-		User user = new User();
+		User user = null;
 		try {
 			connect();
 			String select = "SELECT * FROM users WHERE user_id = ? AND user_pwd = ?";
@@ -173,6 +174,7 @@ public class UserDAOImpl extends DAO implements UserDAO {
 			pstmt.setString(2, password);
 			rs = pstmt.executeQuery();
 			if (rs.isBeforeFirst()) {
+				user = new User();
 				while(rs.next()) {
 					user.setUserNo(rs.getInt("user_no"));
 					user.setUserName(rs.getString("user_name"));
@@ -193,6 +195,78 @@ public class UserDAOImpl extends DAO implements UserDAO {
 			disconnect();
 		}
 		return user;
+	}
+	
+	@Override
+	public int countAll() {
+		int count = 0;
+		try {
+			connect();
+			stmt = conn.createStatement();
+			String select = "SELECT COUNT(*) FROM users WHERE withdrawal_status <> 'Y'";
+			rs = stmt.executeQuery(select);
+			while(rs.next()) { 
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return count;
+	}
+	
+	@Override
+	public User selectOneId(String userId) {
+		User user = null;
+		try {
+			connect();
+			String select = "SELECT * FROM users WHERE user_id = ?";
+			pstmt = conn.prepareStatement(select);
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			if (rs.isBeforeFirst()) {
+				while(rs.next()) {
+					user = new User();
+					user.setUserNo(rs.getInt("user_no"));
+					user.setUserName(rs.getString("user_name"));
+					user.setUserId(rs.getString("user_id"));
+					user.setUserPwd(rs.getString("user_pwd"));
+					user.setJoinDate(rs.getDate("join_date"));
+					user.setLastAccessDate(rs.getDate("last_access_date"));
+					user.setWithdrawalStatus(rs.getString("withdrawal_status"));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+ 		return user;
+	}
+	
+	@Override
+	public void applicationWithdrawal(User user, String reason) {
+		//  TODO
+		WithdrawalDAOImpl.getInstance().insert(user, reason);
+	}
+	
+	@Override
+	public void cancelWithdrawal(User user) {
+		// TODO
+		try {
+			connect();
+			String update = "UPDATE users SET withdrawal_status = 'N' WHERE user_no = ?";
+			pstmt = conn.prepareStatement(update);
+			pstmt.setInt(1, user.getUserNo());
+			pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
 	}
 
 }
