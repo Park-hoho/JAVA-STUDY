@@ -25,7 +25,7 @@ public interface UserDAO {
 	User checklogin(String id, String password);
 	
 	//유저수 조회
-	int countAll();
+	long countAll();
 	
 	//탈퇴 신청
 	void applicationWithdrawal(User user, String reason);

@@ -41,6 +41,39 @@ public class WithdrawalDAOImpl extends DAO implements WithdrawalDAO {
 		}
 		return list;
 	}
+	
+	@Override
+	public List<Withdrawal> selectAllProgress() {
+		List<Withdrawal> list = new ArrayList<>();
+		try {
+			connect();
+			stmt = conn.createStatement();
+			String select = "SELECT w.withdrawal_id, w.user_no, w.application_date, w.withdrawal_reason, w.complete_date, u.user_name, u.user_id, u.join_date\n"
+					+ "FROM withdrawal_list w JOIN users u\n"
+					+ "ON (w.user_no = u.user_no)\n"
+					+ "WHERE w.withdrawal_status = 'Y'";
+			rs = stmt.executeQuery(select);
+			while(rs.next()) {
+				Withdrawal wdl = new Withdrawal();
+				User user = new User();
+				wdl.setWithdrawalId(rs.getInt("withdrawal_id"));
+				wdl.setUserNo(rs.getInt("user_no"));
+				wdl.setApplicationDate(rs.getDate("application_date"));
+				wdl.setWithdrawalReason(rs.getString("withdrawal_reason"));
+				wdl.setCompleteDate(rs.getDate("complete_date"));
+				user.setUserName(rs.getString("user_name"));
+				user.setUserId(rs.getString("user_id"));
+				user.setJoinDate(rs.getDate("join_date"));
+				wdl.setUser(user);
+				list.add(wdl);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return list;
+	}
 
 	@Override
 	public Withdrawal selectOne(int withdrawalId) {
@@ -68,8 +101,7 @@ public class WithdrawalDAOImpl extends DAO implements WithdrawalDAO {
 	}
 
 	@Override
-	public void insert(User user, String reason) {
-		// TODO 탈퇴신청 추가
+	public boolean insert(User user, String reason) {
 		try {
 			connect();
 			String insert = "INSERT INTO withdrawal_list "
@@ -78,12 +110,18 @@ public class WithdrawalDAOImpl extends DAO implements WithdrawalDAO {
 			pstmt.setInt(1, user.getUserNo());
 			pstmt.setString(2, reason);
 			int result = pstmt.executeUpdate();
-			System.out.println(result + "건 입력완료");
+			if (result == 1) {
+				return true;
+			} else {
+				System.out.println("탈퇴신청 문제");
+				return false;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			disconnect();
 		}		
+		return false;
 	}
 
 	@Override
@@ -91,6 +129,7 @@ public class WithdrawalDAOImpl extends DAO implements WithdrawalDAO {
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 	@Override
 	public void delete(int withdrawalId) {
@@ -107,6 +146,31 @@ public class WithdrawalDAOImpl extends DAO implements WithdrawalDAO {
 		} finally {
 			disconnect();
 		}
+	}
+	
+	@Override
+	public boolean cancel(User user) {
+		try {
+			connect();
+			String update = "UPDATE withdrawal_list "
+					+ "SET withdrawal_status = 'N', cancel_date = sysdate "
+					+ "WHERE user_no = ? AND cancel_date IS NULL";
+			pstmt = conn.prepareStatement(update);
+			pstmt.setInt(1, user.getUserNo());
+			int result = pstmt.executeUpdate();
+			if (result == 1) {
+				return true;
+			} else {
+				System.out.println("취소신청 문제");
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("취소신청 문제");
+		} finally {
+			disconnect();
+		}
+		return false;
 	}
 
 }

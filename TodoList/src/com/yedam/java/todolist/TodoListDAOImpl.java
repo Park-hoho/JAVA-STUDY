@@ -131,12 +131,12 @@ public class TodoListDAOImpl extends DAO implements TodoListDAO {
 	
 
 	@Override
-	public void delete(int todoId) {
+	public void delete(Todo todo) {
 		try {
 			connect();
-			String delete = "DELETE FROM todo_list WHERE todo_no = ?";
+			String delete = "DELETE FROM todo_list WHERE todo_id = ?";
 			pstmt = conn.prepareStatement(delete);
-			pstmt.setInt(1, todoId);
+			pstmt.setInt(1, todo.getTodoId());
 			int result = pstmt.executeUpdate();
 			System.out.println(result + "건이 삭제되었습니다.");
 		} catch (SQLException e) {
@@ -236,6 +236,25 @@ public class TodoListDAOImpl extends DAO implements TodoListDAO {
 		} catch (ParseException  e){
 			return  false;
 		}
+	}
+	
+	@Override
+	public long countAll() {
+		long count = 0;
+		try {
+			connect();
+			stmt = conn.createStatement();
+			String select = "SELECT COUNT(*) FROM todo_list";
+			rs = stmt.executeQuery(select);
+			while(rs.next()) { 
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return count;
 	}
 	
 }

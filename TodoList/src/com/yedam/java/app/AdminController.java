@@ -5,8 +5,11 @@ import java.util.Scanner;
 
 import com.yedam.java.admins.Admin;
 import com.yedam.java.admins.AdminDAOImpl;
+import com.yedam.java.todolist.TodoListDAOImpl;
 import com.yedam.java.users.User;
 import com.yedam.java.users.UserDAOImpl;
+import com.yedam.java.withdrawallist.Withdrawal;
+import com.yedam.java.withdrawallist.WithdrawalDAOImpl;
 
 public class AdminController {
 	Scanner sc = new Scanner(System.in);
@@ -25,7 +28,7 @@ public class AdminController {
 			} else if (selected == 12) {
 				viewAllUsers();
 			} else if (selected == 13) {
-				controllWithdrawallUser();
+				viewWithdrawallUser();
 			} else if (selected == 21) {
 				countAllTodoList();
 			} else if (selected == 22) {
@@ -49,7 +52,7 @@ public class AdminController {
 		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		System.out.println("11.유저 정보 찾기   | 21.총 todo 수  | 31.관리자 추가");
 		System.out.println("12.모든 유저 목록   | 22.총 유저 수   | 32.관리자 수정");
-		System.out.println("13.탈퇴 유저 관리   |               | 33.모든 관리자 리스트");
+		System.out.println("13.탈퇴 유저 목록   |               | 33.모든 관리자 리스트");
 		System.out.println("0.종료");
 	}
 
@@ -93,17 +96,17 @@ public class AdminController {
 
 	private void countAllUsers() {
 		System.out.println("총 유저 수: " + UserDAOImpl.getInstance().countAll());
-		
 	}
 
 	private void countAllTodoList() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("총 todo 수: " + TodoListDAOImpl.getInstance().countAll());
 	}
 
-	private void controllWithdrawallUser() {
-		// TODO Auto-generated method stub
-		
+	private void viewWithdrawallUser() {
+		List<Withdrawal> list = WithdrawalDAOImpl.getInstance().selectAllProgress();
+		for(Withdrawal wdl : list) {
+			System.out.println(wdl);
+		}
 	}
 
 	private void viewAllUsers() {

@@ -25,6 +25,9 @@ public interface TodoListDAO {
 	void updateTodoImportance(Todo todo, int importance);
 	
 	//삭제 (User)
-	void delete(int todoId);
+	void delete(Todo todo);
+	
+	//총 todo 수
+	long countAll();
 	
 }

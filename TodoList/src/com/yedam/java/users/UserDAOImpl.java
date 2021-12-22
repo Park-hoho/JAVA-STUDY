@@ -198,8 +198,8 @@ public class UserDAOImpl extends DAO implements UserDAO {
 	}
 	
 	@Override
-	public int countAll() {
-		int count = 0;
+	public long countAll() {
+		long count = 0;
 		try {
 			connect();
 			stmt = conn.createStatement();
@@ -247,25 +247,44 @@ public class UserDAOImpl extends DAO implements UserDAO {
 	
 	@Override
 	public void applicationWithdrawal(User user, String reason) {
-		//  TODO
-		WithdrawalDAOImpl.getInstance().insert(user, reason);
+		//  탈퇴
+		boolean check = WithdrawalDAOImpl.getInstance().insert(user, reason);
+		if (check) {
+			try {
+				connect();
+				String update = "UPDATE users SET withdrawal_status = 'Y' WHERE user_no = ?";
+				pstmt = conn.prepareStatement(update);
+				pstmt.setInt(1, user.getUserNo());
+				pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				disconnect();
+			}
+		}
 	}
 	
 	@Override
 	public void cancelWithdrawal(User user) {
-		// TODO
-		try {
-			connect();
-			String update = "UPDATE users SET withdrawal_status = 'N' WHERE user_no = ?";
-			pstmt = conn.prepareStatement(update);
-			pstmt.setInt(1, user.getUserNo());
-			pstmt.executeUpdate();
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			disconnect();
+		// 탈퇴 취소
+		boolean check = WithdrawalDAOImpl.getInstance().cancel(user);
+		if (check) {
+			try {
+				connect();
+				String update = "UPDATE users SET withdrawal_status = 'N' WHERE user_no = ?";
+				pstmt = conn.prepareStatement(update);
+				pstmt.setInt(1, user.getUserNo());
+				int result = pstmt.executeUpdate();
+				if (result == 1) {
+					System.out.println("취소처리 되었습니다. 다시 로그인해주세요.");
+				} else {
+					System.out.println("오류");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				disconnect();
+			}
 		}
 	}
 

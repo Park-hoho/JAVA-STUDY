@@ -83,7 +83,7 @@ public class UserController {
 				} else if (strArr[1].equals("삭제")) {
 					
 					// 할 일 삭제
-					TodoListDAOImpl.getInstance().delete(todo.getTodoId());
+					TodoListDAOImpl.getInstance().delete(todo);
 					refreshList();
 					
 				} else { System.out.println("잘못된 입력입니다."); }
@@ -166,7 +166,7 @@ public class UserController {
 			System.out.println("완료 된 목록 "+COMPLETED_LIST.size()+"개");
 			showList(COMPLETED_LIST);
 			System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-			System.out.println("1.완료취소  3.삭제  9.뒤로가기");
+			System.out.println("1.완료취소  2.삭제  9.뒤로가기");
 			System.out.println();
 			System.out.print("메뉴입력>>");
 			int selected = sc.nextInt();
@@ -179,11 +179,9 @@ public class UserController {
 			} else if (selected == 2) {
 				System.out.print("번호입력>>");
 				int todoId = sc.nextInt();
-				todoId = COMPLETED_LIST.get(todoId - 1).getTodoId();
-				TodoListDAOImpl.getInstance().delete(todoId);
+				Todo todo = COMPLETED_LIST.get(todoId - 1);
+				TodoListDAOImpl.getInstance().delete(todo);
 				refreshList();
-			} else if (selected == 3) {
-				
 			} else if (selected == 9) {
 				break;
 			} else { System.out.println("잘못된 입력입니다."); }
